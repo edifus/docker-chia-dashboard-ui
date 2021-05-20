@@ -36,19 +36,6 @@ docker-compose up -d
 * Access WebUI at http://\<docker-host-ip\>
 
 
-## Satellite Configuration Example
-
-* Satellite uses API URL
-
-```
-chiaConfigDirectory: /home/user/.chia/mainnet
-apiKey: f2d3a4ed-6480-4ae8-b130-06fd1845b440
-excludedServices:
-  - wallet
-  - fullNode
-chiaDashboardCoreUrl: http://<docker-host-ip>:5000
-```
-
 ## Reverse Proxy
 
 * Recommend running these services behind reverse proxy with SSL if hosting over the internet.
@@ -111,9 +98,13 @@ services:
     restart: unless-stopped
 ```
 
-### Satellite Configuration Example
+### WebUI
 
-* Satellite uses API URL
+* Access Dashboard at https://chia-dashboard.domain.tld
+* Direct Satellites to https://chia-dashboard-api.domain.tld
+* `config.ts` use `export const apiBaseUrl = 'https://chia-dashboard-api.domain.tld/api';`
+
+### Satellite Configuration Example
 
 ```
 chiaConfigDirectory: /home/user/.chia/mainnet
