@@ -1,4 +1,4 @@
-# Chia-Dashboard-UI Docker container
+# Unofficial Chia-Dashboard-UI Docker container
 
 https://github.com/felixbrucker/chia-dashboard-ui
 
