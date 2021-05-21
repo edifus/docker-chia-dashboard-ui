@@ -31,7 +31,7 @@ cd docker-chia-dashboard
 docker-compose up -d
 ```
 
-## Dashboard UI
+### Dashboard UI
 
 * Access WebUI at http://\<docker-host-ip\>
 
