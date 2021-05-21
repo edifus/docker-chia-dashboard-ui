@@ -29,6 +29,7 @@ cd docker-chia-dashboard
 
 ```
 docker-compose build
+docker-compose pull
 docker-compose up -d
 ```
 
@@ -36,6 +37,7 @@ docker-compose up -d
 
 ```
 docker-compose build --no-cache
+docker-compose pull
 docker-compose up -d
 docker image prune
 ```
