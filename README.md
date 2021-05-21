@@ -28,7 +28,16 @@ cd docker-chia-dashboard
 ### Run containers
 
 ```
+docker-compose build
 docker-compose up -d
+```
+
+#### Updates
+
+```
+docker-compose build --no-cache
+docker-compose up -d
+docker image prune
 ```
 
 ### Dashboard UI
@@ -40,7 +49,7 @@ docker-compose up -d
 
 * Recommend running these services behind reverse proxy with SSL if hosting over the internet.
 
-### Example Traefik v2 (existing setup required)
+### Traefik v2 Example (existing setup required)
 
 ```
 version: '3.8'
