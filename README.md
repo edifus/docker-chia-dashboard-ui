@@ -91,6 +91,7 @@ services:
 
 * Access Dashboard at https://chia-dashboard.domain.tld
 * Direct Satellites to https://chia-dashboard.domain.tld
+* Use `export const apiBaseUrl = 'https://chia-dashboard.domain.tld/api';` with `config.ts`
 
 ### Satellite Configuration Example
 
