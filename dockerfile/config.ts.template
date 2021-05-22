@@ -5,5 +5,5 @@ export const googleClientId = null;
 // Do not modify apiBaseUrl
 export const apiBaseUrl = 'http://localhost:5000/api';
 export const enablePeriodicUpdates = true;
-// enable/disable Discord request Guild permission
+// enable/disable Discord server Guild permission
 export const requestDiscordGuildPermission = false;
