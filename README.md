@@ -5,7 +5,6 @@ https://github.com/felixbrucker/chia-dashboard-ui
 Based on Linuxserver.io Alpine Nginx container. 
 * Requries existing MongoDB setup - https://hub.docker.com/_/mongo
 * Requires at least one oauth provider - Google/Gitlab/Discord supported
-* Requires Chia-Dashboard-Core - https://github.com/edifus/docker-chia-dashboard-core 
 
 
 ## Instructions
@@ -29,7 +28,6 @@ cd docker-chia-dashboard
 
 ```
 docker-compose build
-docker-compose pull
 docker-compose up -d
 ```
 
@@ -37,14 +35,14 @@ docker-compose up -d
 
 ```
 docker-compose build --no-cache
-docker-compose pull
 docker-compose up -d
 docker image prune
 ```
 
 ### Dashboard UI
 
-* Access WebUI at http://\<docker-host-ip\>
+* Access Dashboard at http://\<docker-host-ip\>
+* Direct Satellites to http://\<docker-host-ip\>
 
 
 ## Reverse Proxy
@@ -57,30 +55,6 @@ docker image prune
 version: '3.8'
 
 services:
-  chia-dashboard-core:
-    image: ghcr.io/edifus/chia-dashboard-core:latest
-    container_name: chia-dashboard-core
-    env_file:
-      - .env
-    volumes:
-      - type: bind
-        source: /etc/localtime
-        target: /etc/localtime
-        read_only: true
-    labels:
-      traefik.enable: 'true'
-      traefik.http.routers.chia-dashboard-api-http.entrypoints: http
-      traefik.http.routers.chia-dashboard-api-http.rule: Host(`chia-dashboard-api.domain.tld`)
-      traefik.http.middlewares.redirect-https.redirectscheme.scheme: https
-      traefik.http.middlewares.redirect-https.redirectscheme.permanent: 'true'
-      traefik.http.routers.chia-dashboard-api-http.middlewares: redirect-https
-      traefik.http.routers.chia-dashboard-api-http.service: chia-dashboard-api
-      traefik.http.routers.chia-dashboard-api-https.entrypoints: https
-      traefik.http.routers.chia-dashboard-api-https.rule: Host(`chia-dashboard-api.domain.tld`)
-      traefik.http.routers.chia-dashboard-api-https.tls: 'true'
-      traefik.http.routers.chia-dashboard-api-https.service: chia-dashboard-api
-      traefik.http.services.chia-dashboard-api.loadbalancer.server.port: 5000
-    restart: unless-stopped
   chia-dashboard-ui:
     build: ./dockerfile
     image: chia-dashboard-ui
@@ -97,6 +71,8 @@ services:
         target: /config
     labels:
       traefik.enable: 'true'
+      traefik.http.middlewares.redirect-https.redirectscheme.scheme: https
+      traefik.http.middlewares.redirect-https.redirectscheme.permanent: 'true'
       traefik.http.routers.chia-dashboard-http.entrypoints: http
       traefik.http.routers.chia-dashboard-http.rule: Host(`chia-dashboard.domain.tld`)
       traefik.http.routers.chia-dashboard-http.middlewares: redirect-https
@@ -112,8 +88,7 @@ services:
 ### WebUI
 
 * Access Dashboard at https://chia-dashboard.domain.tld
-* Direct Satellites to https://chia-dashboard-api.domain.tld
-* `config.ts` use `export const apiBaseUrl = 'https://chia-dashboard-api.domain.tld/api';`
+* Direct Satellites to https://chia-dashboard.domain.tld
 
 ### Satellite Configuration Example
 
@@ -123,5 +98,5 @@ apiKey: f2d3a4ed-6480-4ae8-b130-06fd1845b440
 excludedServices:
   - wallet
   - fullNode
-chiaDashboardCoreUrl: https://chia-dashboard-api.domain.tld
+chiaDashboardCoreUrl: https://chia-dashboard.domain.tld
 ```
