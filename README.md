@@ -33,6 +33,8 @@ docker-compose up -d
 
 #### Updates
 
+**NOTE:** Delete `/path/to/config/nginx/site-confs/default` to get updates to nginx configuration
+
 ```
 docker-compose build --no-cache
 docker-compose up -d
