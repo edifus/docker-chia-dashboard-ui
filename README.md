@@ -6,6 +6,7 @@ Based on Linuxserver.io Alpine Nginx container.
 * Requries existing MongoDB setup - https://hub.docker.com/_/mongo
 * Requires at least one oauth provider - Google/Gitlab/Discord supported
 
+Now based on single image and does not require separate chia-dashboard-core
 
 ## Instructions
 
