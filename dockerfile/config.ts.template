@@ -2,8 +2,7 @@
 export const discordClientId = null;
 export const githubClientId = null;
 export const googleClientId = null;
-// Update with remote accessible endpoint information
-// Reverse proxy - https://chia-dashboard.domain.tld/api
+// Update with externally accessible endpoint information
 export const apiBaseUrl = 'http://<ip_or_hostname>/api';
 export const enablePeriodicUpdates = true;
 // enable/disable Discord server Guild permission
