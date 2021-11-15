@@ -12,7 +12,7 @@ Now based on single image and does not require separate chia-dashboard-core
 
 ```
 git clone https://github.com/edifus/docker-chia-dashboard-ui.git
-cd docker-chia-dashboard-ui
+cd docker-chia-dashboard
 ````
 
 ### Dashboard Core
