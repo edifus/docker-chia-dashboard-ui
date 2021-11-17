@@ -10,12 +10,11 @@ COPY config.ts /
 RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache --virtual=build-dependencies \
-  sed \
   curl \
   g++ \
   make \
   yarn \
-  nodejs-npm && \
+  npm && \
  echo "**** install runtime packages ****" && \
  apk add --no-cache \
 	git \
@@ -26,18 +25,10 @@ RUN \
  echo "**** install chia-dashboard-ui ****" && \
  git -C /app clone https://github.com/felixbrucker/chia-dashboard-ui.git && \
  echo "**** install node modules ****" && \
- npm install --prefix /app/chia-dashboard-core && \
- npm install --prefix /app/chia-dashboard-ui && \
- echo "**** update config.ts to use env.process ****" && \
- sed -i \
-  -e '/^export const discordClientId/ s,^.*$,export const discordClientId = proccess.env.DISCORD_CLIENT_ID || null;,' \
-  -e '/^export const githubClientId/ s,^.*$,export const githubClientId = proccess.env.GITHUB_CLIENT_ID || null;,' \
-  -e '/^export const googleClientId/ s,^.*$,export const googleClientId = proccess.env.GOOGLE_CLIENT_ID || null;,' \
-  -e '/^export const apiBaseUrl/ s,^.*$,export const apiBaseUrl = proccess.env.API_BASE_URL || 'http://localhost:5000/api';,' \
-  -e '/^export const enablePeriodicUpdates/ s,^.*$,export const enablePeriodicUpdates = proccess.env.PERIODIC_UPDATES || true;,' \
-  -e '/^export const requestDiscordGuildPermission/ s,^.*$,export const requestDiscordGuildPermission = proccess.env.DISCORD_PERM_REQUIRED || true;,' \
-  /app/chia-dashboard-ui/src/app/config.ts && \
+ npm install --force --prefix /app/chia-dashboard-core && \
+ npm install --force --prefix /app/chia-dashboard-ui && \
 echo "**** build chia-dashboard-ui ****" && \
+ mv -f /config.ts /app/chia-dashboard-ui/src/app/config.ts && \
  cd /app/chia-dashboard-ui && yarn run build && \
  echo "**** cleanup ****" && \
  apk del --purge \
