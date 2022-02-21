@@ -34,10 +34,9 @@ docker-compose up -d
 
 #### Updates
 
-**NOTE:** Delete `/path/to/config/nginx/site-confs/default` to get updates to nginx configuration and update satellite URLs if needed.
+**NOTE:** Delete `/path/to/config/nginx/nginx.conf` and `/path/to/config/nginx/site-confs/default` to get updates to nginx configuration and update satellite URLs if needed.
 
 ```
-docker-compose down --remove-orphans
 docker-compose build --no-cache
 docker-compose up -d
 docker image prune
