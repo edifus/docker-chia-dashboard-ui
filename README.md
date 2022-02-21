@@ -17,7 +17,7 @@ cd docker-chia-dashboard-ui
 
 ### Dashboard Core
 
-* Modify `.env.tempalte` and save as `.env` with your own values, requires at least one oauth provider.
+* Modify `.env.template` and save as `.env` with your own values, requires at least one oauth provider.
 * `PUID` - Set UserID to run container | `PGID` - Set GroupID to run container
 
 ### Dashboard UI
