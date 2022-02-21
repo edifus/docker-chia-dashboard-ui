@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.13
+FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.15
 
 # environment variables
 ENV HOME="/config"
@@ -10,35 +10,34 @@ COPY config.ts /
 RUN \
  echo "**** install build packages ****" && \
  apk add --no-cache --virtual=build-dependencies \
-	curl \
-	g++ \
-	make \
-	yarn \
-	nodejs-npm && \
+   curl \
+   g++ \
+   make \
+   yarn \
+   npm && \
  echo "**** install runtime packages ****" && \
  apk add --no-cache \
-	git \
-	nodejs && \
+   git \
+   nodejs && \
  npm config set unsafe-perm true && \
- echo "**** install chia-dashboard-core ****" && \
+ echo "**** install chia-dashboard-core and customizations ****" && \
  git -C /app clone https://github.com/felixbrucker/chia-dashboard-core.git && \
- echo "**** install chia-dashboard-ui ****" && \
+ echo "**** install chia-dashboard-ui and customizations ****" && \
  git -C /app clone https://github.com/felixbrucker/chia-dashboard-ui.git && \
+ mv -f /config.ts /app/chia-dashboard-ui/src/app/config.ts && \
  echo "**** install node modules ****" && \
- npm install --prefix /app/chia-dashboard-core && \
- npm install --prefix /app/chia-dashboard-ui && \
- echo "**** build chia-dashboard-ui with config.ts ****" && \
- rm -f /app/chia-dashboard-ui/src/app/config.ts && \
- mv /config.ts /app/chia-dashboard-ui/src/app/config.ts && \
+ npm install --force --prefix /app/chia-dashboard-core && \
+ npm install --force --prefix /app/chia-dashboard-ui && \
+ echo "**** build chia-dashboard-ui ****" && \
  cd /app/chia-dashboard-ui && yarn run build && \
  echo "**** cleanup ****" && \
  apk del --purge \
-	build-dependencies && \
+   build-dependencies && \
  rm -rf \
-	/root \
-	/tmp/* && \
+   /root \
+   /tmp/* && \
  mkdir -p \
-	/root
+   /root
 
 # add local files
 COPY root/ /
